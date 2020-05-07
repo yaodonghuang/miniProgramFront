@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/videoinfo/videoinfo",
+    "pages/userLogin/userLogin",
+    "pages/userRegist/regist",
+    "pages/mine/mine",
+    "pages/chooseBgm/chooseBgm"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "微信小程序视频上传",
+    "backgroundTextStyle": "light"
+  },
+  "debug": true,
+  "sitemapLocation": "sitemap79.json"
+}
