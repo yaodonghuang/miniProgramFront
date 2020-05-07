@@ -12,6 +12,6 @@
     "navigationBarTitleText": "微信小程序视频上传",
     "backgroundTextStyle": "light"
   },
-  "debug": true,
+  "debug": true, 
   "sitemapLocation": "sitemap79.json"
 }
