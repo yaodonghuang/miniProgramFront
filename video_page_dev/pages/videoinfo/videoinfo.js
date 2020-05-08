@@ -19,10 +19,17 @@ Page({
     me.videoCtx = wx.createVideoContext('myVideo', me);
     // 获取上一个页面传入的参数
     var videoInfo = JSON.parse(parms.videoInfo);
+    var height = videoInfo.videoHeight;
+    var width = videoInfo.videoWidth;
+    var cover = "cover";
+    if(width >= height){
+      cover = "";
+    }
     me.setData({
       videoId: videoInfo.id,
       src: app.serverUrl + videoInfo.videoPath,
-      videoInfo: videoInfo
+      videoInfo: videoInfo,
+      cover:cover
     })
   },
   onShow: function () {
