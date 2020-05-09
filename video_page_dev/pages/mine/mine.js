@@ -4,10 +4,15 @@ Page({
   data: {
     faceUrl:"../resource/images/noneface.png"
   },
-  onLoad:function(){
-    var serverUrl = app.serverUrl;
+  onLoad:function(params){
+    var me = this;
     var user = app.getGlobalUserInfo();
     var userId = user.id;
+    var publisherId = params.publisherId;
+    if(publisherId != null && publisherId != '' && publisherId != undefined){
+      userId = publisherId;
+    }
+    var serverUrl = app.serverUrl;
     var token = user.userToken;
     if(userId == null || userId == '' || userId == undefined){
       userId = "";
@@ -24,7 +29,7 @@ Page({
       method:"POST",
       header:{
           'content-type':'application/json',
-          'userId':userId,
+          'userId':user.id,
           'userToken':token
       },
       success:function(res){
