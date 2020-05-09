@@ -7,15 +7,25 @@ Page({
   onLoad:function(){
     var serverUrl = app.serverUrl;
     var user = app.getGlobalUserInfo();
+    var userId = user.id;
+    var token = user.userToken;
+    if(userId == null || userId == '' || userId == undefined){
+      userId = "";
+    }
+    if(token == null || token == '' || token == undefined){
+      token = "";
+    }
     var me = this;
     wx.showLoading({
       title: '请等待。。。',
     });
     wx.request({
-      url: serverUrl + '/user/query?userId=' + user.id,
+      url: serverUrl + '/user/query?userId=' + userId,
       method:"POST",
       header:{
-          'content-type':'application/json'
+          'content-type':'application/json',
+          'userId':userId,
+          'userToken':token
       },
       success:function(res){
         wx.hideLoading({
@@ -34,6 +44,17 @@ Page({
               followCounts:userInfo.followCounts,
               receiveLikeCounts:userInfo.receiveLikeCounts,
               nickname:userInfo.nickname
+            })
+        }else if(status == 502){
+            wx.showToast({
+              title: res.data.msg,
+              duration:3000,
+              icon:"none",
+              success:function(){
+                wx.redirectTo({
+                  url: '../userLogin/userLogin',
+                })
+              }
             })
         }
       }

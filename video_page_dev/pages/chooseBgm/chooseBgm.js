@@ -14,6 +14,8 @@ Page({
         videoParams:params
       })
       var serverUrl = app.serverUrl;
+      var userInfo = app.getGlobalUserInfo();
+        var token = userInfo.userToken;
             wx.showLoading({
               title: '请等待。。。',
             })
@@ -21,7 +23,9 @@ Page({
         url: serverUrl + '/bgm/list',
         method:"POST",
         header:{
-            'content-type':'application/json'
+            'content-type':'application/json',
+            'userId':userInfo.id,
+            'userToken':token
         },
         success:function(res){
           console.log(res.data);
@@ -37,6 +41,17 @@ Page({
                   serverUrl:serverUrl
                 });
               }
+          }else if(status == 502){
+            wx.showToast({
+              title: res.data.msg,
+              duration:3000,
+              icon:"none",
+              success:function(){
+                wx.redirectTo({
+                  url: '../userLogin/userLogin',
+                })
+              }
+            })
           }
         }
       })
@@ -58,6 +73,7 @@ Page({
         })
         var serverUrl = app.serverUrl;
         var userInfo = app.getGlobalUserInfo();
+        var token = userInfo.userToken;
         wx.uploadFile({
           url: serverUrl + '/video/upload', 
           formData:{
@@ -71,7 +87,9 @@ Page({
           filePath: tempFilePath,
           name: 'videoFile',
           header:{
-            'content-type':'application/json'
+            'content-type':'application/json',
+            'userId':userInfo.id,
+            'userToken':token
           },
           success:function (res){
             wx.hideLoading({
@@ -124,6 +142,17 @@ Page({
               //     }
               //   }
               // })
+            }else if(data.status == 502){
+              wx.showToast({
+                title: res.data.msg,
+                duration:3000,
+                icon:"none",
+                success:function(){
+                  wx.redirectTo({
+                    url: '../userLogin/userLogin',
+                  })
+                }
+              })
             }else{
               wx.showToast({
                 title: '上传失败！',

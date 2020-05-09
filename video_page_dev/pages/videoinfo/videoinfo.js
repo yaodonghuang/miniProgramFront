@@ -41,11 +41,35 @@ Page({
     me.videoCtx.pause();
   },
   upload: function () {
-    videoUtil.uploadVideo();
+    var me = this;
+    var userInfo = app.getGlobalUserInfo();
+
+    var videoInfo = JSON.stringify(me.data.videoInfo);
+
+    var realUrl = '../videoinfo/videoinfo#videoInfo@' + videoInfo;
+    if(userInfo == null || userInfo == '' || userInfo == undefined){
+      wx.navigateTo({
+        url: '../userLogin/userLogin?redirectUrl=' + realUrl,
+      })
+    }else{
+      videoUtil.uploadVideo();
+    }
   },
   showIndex:function(){
     wx.redirectTo({
       url: '../index/index',
     })
+  },
+  showMine:function(){
+    var userInfo = app.getGlobalUserInfo();
+    if(userInfo == null || userInfo == '' || userInfo == undefined){
+      wx.navigateTo({
+        url: '../userLogin/userLogin',
+      })
+    }else{
+      wx.navigateTo({
+        url: '../mine/mine',
+      })
+    }
   }
 })
