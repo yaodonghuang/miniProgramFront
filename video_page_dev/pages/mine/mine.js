@@ -31,7 +31,7 @@ Page({
       title: '请等待。。。',
     });
     wx.request({
-      url: serverUrl + '/user/query?userId=' + userId,
+      url: serverUrl + '/user/query?userId=' + userId + "&fanId=" + user.id,
       method: "POST",
       header: {
         'content-type': 'application/json',
@@ -54,7 +54,8 @@ Page({
             fansCounts: userInfo.fansCounts,
             followCounts: userInfo.followCounts,
             receiveLikeCounts: userInfo.receiveLikeCounts,
-            nickname: userInfo.nickname
+            nickname: userInfo.nickname,
+            isFollow:userInfo.follow
           })
         } else if (status == 502) {
           wx.showToast({
@@ -99,11 +100,13 @@ Page({
         })
         if (followType == '1') {
           me.setData({
-            isFollow: true
+            isFollow: true,
+            fansCounts:++me.data.fansCounts
           })
         } else {
           me.setData({
-            isFollow: false
+            isFollow: false,
+            fansCounts:--me.data.fansCounts
           })
         }
       }
